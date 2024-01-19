@@ -42,8 +42,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CaptainGame() {
-    val treasureFound = remember { mutableStateOf(0) }
-    val direction = remember { mutableStateOf("North") }
+    val treasureFound = remember {
+        mutableStateOf(0)
+    }
+
+    val direction = remember {
+        mutableStateOf("North")
+    }
+
+    val stormOrTreasure = remember {
+        mutableStateOf("")
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -52,11 +61,15 @@ fun CaptainGame() {
     ) {
         Text(text = "Treasure Found: ${treasureFound.value}")
         Text(text = "Current Direction: ${direction.value}")
+
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
             direction.value = "East"
             if(Random.nextBoolean()) {
                 treasureFound.value += 1
+                stormOrTreasure.value = "Found a Treasure towards ${direction.value} !"
+            } else {
+                stormOrTreasure.value = "Strom Ahead!"
             }
         }) {
             Text(text = "Sail East")
@@ -66,6 +79,9 @@ fun CaptainGame() {
             direction.value = "West"
             if(Random.nextBoolean()) {
                 treasureFound.value += 1
+                stormOrTreasure.value = "Found a Treasure  ${direction.value}!"
+            } else {
+                stormOrTreasure.value = "Strom Ahead!"
             }
         }) {
             Text(text = "Sail West")
@@ -75,6 +91,9 @@ fun CaptainGame() {
             direction.value = "East"
             if(Random.nextBoolean()) {
                 treasureFound.value += 1
+                stormOrTreasure.value = "Found a Treasure ${direction.value}!"
+            } else {
+                stormOrTreasure.value = "Strom Ahead!"
             }
         }) {
             Text(text = "Sail East")
@@ -84,10 +103,15 @@ fun CaptainGame() {
             direction.value = "South"
             if(Random.nextBoolean()) {
                 treasureFound.value += 1
+                stormOrTreasure.value = "Found a Treasure ${direction.value}!"
+            } else {
+                stormOrTreasure.value = "Strom Ahead!"
             }
         }) {
             Text(text = "Sail South")
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = stormOrTreasure.value)
     }
 }
 
